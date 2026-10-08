@@ -1,0 +1,30 @@
+==================================================
+        Web Security Scanner
+==================================================
+
+Target: https://example.com
+Max pages: 10
+
+[+] Scanning: https://example.com
+
+==================================================
+                 SCAN REPORT
+==================================================
+
+Target: https://example.com
+Pages scanned: 1
+Findings: 3
+
+Findings:
+
+[HIGH] Missing Content-Security-Policy header
+    URL: https://example.com
+    The Content-Security-Policy security header is not present.
+
+[MEDIUM] Missing X-Frame-Options header
+    URL: https://example.com
+    The X-Frame-Options security header is not present.
+
+[LOW] Server header exposed
+    URL: https://example.com
+    The server identifies itself as: nginx
