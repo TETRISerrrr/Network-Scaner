@@ -1,53 +1,73 @@
-# Network-Scaner
-A lightweight web security scanner written in Python.
+# Python Web Security Scanner
 
-This project is a cybersecurity pet project designed to perform basic security checks on web applications and detect common security misconfigurations.
+A lightweight web security scanner written in Python for cybersecurity learning and authorized security testing.
 
-Features
-HTTPS detection
-Security headers analysis
-Cookie security checks
-HTTP status code analysis
-robots.txt analysis
-HTML form analysis
-Website crawling
-Reflected input detection
-Potential Open Redirect detection
-Technology detection
-Risk score calculation
-JSON report generation
-CLI interface
-Project Structure
+## Features
+
+* HTTPS security checks
+* Security headers analysis
+* Cookie security checks
+* HTTP status code analysis
+* `robots.txt` analysis
+* HTML form analysis
+* Website crawling
+* Reflected input detection
+* Open redirect detection
+* Technology detection
+* Risk score calculation
+* Severity classification
+* JSON export
+* Configurable maximum pages
+
+## Project Structure
+
+```text
 web-security-scanner/
-│
 ├── main.py
 ├── scanner.py
 ├── checks.py
 ├── report.py
 ├── requirements.txt
-├── README.md
-└── .gitignore
-Usage
+└── README.md
+```
 
-Scan a website:
+## Usage
 
+### Scan a website
+
+```bash
 python main.py https://example.com
+```
 
-Scan multiple pages:
+By default, up to `10` pages are scanned.
 
+### Change maximum number of pages
+
+```bash
 python main.py https://example.com --max-pages 20
+```
 
-Save the scan results to JSON:
+### Export results to JSON
 
+```bash
 python main.py https://example.com --output report.json
-Example Output
+```
+
+### Scan and export results
+
+```bash
+python main.py https://example.com --max-pages 20 --output report.json
+```
+
+## Example Output
+
+```text
 ============================================================
                  Web Security Scanner
 ============================================================
-
 Target: https://example.com
 Max pages: 10
-
+============================================================
 [+] Checking: https://example.com/robots.txt
 [+] Scanning: https://example.com
 
@@ -69,39 +89,53 @@ Severity summary:
   MEDIUM: 3
   LOW:    2
   INFO:   1
-Risk Levels
-Level	Score	Description
-NONE	0	No detected issues
-LOW	1–9	Low-risk findings
-MEDIUM	10–19	Potential security weaknesses
-HIGH	20+	More serious findings
-Detected Technologies
 
-The scanner can identify some technologies using HTTP headers and page content:
+Findings:
 
-Cloudflare
-Nginx
-Apache
-PHP
-Express
-WordPress
-React
-jQuery
+[MEDIUM] Missing Content-Security-Policy header
+    Type: security_header
+    URL: https://example.com
+    The Content-Security-Policy security header is not present.
 
-Technology detection is basic and may produce false positives.
+[MEDIUM] Missing Strict-Transport-Security header
+    Type: security_header
+    URL: https://example.com
+    The Strict-Transport-Security security header is not present.
+```
 
-Limitations
+## How It Works
 
-This is an educational project and not a replacement for professional security scanners.
+The scanner sends HTTP requests to the target website and analyzes the returned responses.
 
-Some findings require manual verification and may result in false positives.
+For each page:
 
-The scanner performs basic security checks and does not attempt to exploit vulnerabilities.
+1. The HTTP response is received.
+2. HTTPS configuration is checked.
+3. Security headers are analyzed.
+4. Cookies are checked for security flags.
+5. HTTP status codes are analyzed.
+6. HTML forms are inspected.
+7. URL parameters are tested for reflected input.
+8. Redirect parameters are checked.
+9. Website technologies are detected.
+10. Links from the same domain are added to the scan queue.
 
-Disclaimer
+The scanner continues until the configured maximum number of pages is reached.
 
-This project is intended for educational purposes and authorized security testing only.
+## Technologies
 
-Only scan websites and systems that you own or have explicit permission to test.
+* Python
+* HTTP/HTTPS
+* Requests
+* BeautifulSoup
+* HTML Parsing
+* Web Crawling
+* JSON
 
-The author is not responsible for any misuse of this software.
+## Security Notice
+
+This project is intended for educational purposes and authorized security testing.
+
+Only scan websites that you own or systems for which you have explicit permission to perform security testing.
+
+The author is not responsible for misuse of this software.
